@@ -1,25 +1,28 @@
 (function (modules) { // webpackBootstrap
     // 1.初始化一个缓存
     var installedModules = {};
-    // 2.自己实现了一个require方法
-    function __webpack_require__(moduleId) { // "./src/index.js"
+
+    // 2.自己实现一个require方法
+    function __webpack_require__(moduleId) {  //moduleId : ./src/index.js
         // 2.1判断缓存中有没有当前需要使用的模块
         if (installedModules[moduleId]) {
+            //2.1.1如果有直接返回
             return installedModules[moduleId].exports;
         }
-        // 2.2自己创建一个缓存
+        // 2.2如果没有需要使用的模块，自己创建一个模块，并放到缓存中去
         var module = installedModules[moduleId] = {
             i: moduleId,
             l: false,
             exports: {}
         };
-        // Execute the module function
+        // 2.3执行模块对应的函数(入口模块 + 依赖模块)
         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
         // Flag the module as loaded
         module.l = true;
         // Return the exports of the module
         return module.exports;
     }
+
     // expose the modules object (__webpack_modules__)
     __webpack_require__.m = modules;
     // expose the module cache
@@ -68,14 +71,31 @@
     };
     // __webpack_public_path__
     __webpack_require__.p = "";
-    // Load entry module and return exports
+    // 在这里调用我们自定义的require方法
     return __webpack_require__(__webpack_require__.s = "./src/index.js");
 })
 ({
-    "./src/index.js": // key
-        (function (module, exports, __webpack_require__) { // value
-            function getSum(a, b){
-    return a + b
-}
-        })
+    
+    "./src/index.js":  //key
+        (function (module, exports, __webpack_require__) {  //value
+            // const a = require('./test/a.js')
+// const b = requrie('./test/b.js')
+// const c = require('./c.js')
+// function getSum(a, b){
+//     return a + b
+// }
+// c()
+// getSum(a ,b)
+__webpack_require__("./src/index.less");
+
+let str = 'hi, undefined~';
+        }),
+    
+    "./src/index.less":  //key
+        (function (module, exports, __webpack_require__) {  //value
+            let style = document.createElement("style");
+style.innerHTML = "html,\nbody {\n  width: 100%;\n  height: 100%;\n}\nhtml div,\nbody div {\n  width: 200px;\n  height: 200px;\n  background: #000;\n}\n";
+document.head.appendChild(style);
+        }),
+    
 });
