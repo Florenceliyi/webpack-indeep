@@ -1,7 +1,6 @@
 const path =  require("path");
+const CleanWebpackPlugin = require('./src/plugin/CleanWebpackPlugin.js');
 
-const res = path.resolve(__dirname)
-console.log('res',res);
 
 module.exports = {
     devtool: "eval",
@@ -42,5 +41,10 @@ module.exports = {
                 }]
             }
         ]
-    }
+    },
+    plugins: [
+        new CleanWebpackPlugin({
+            name: "Florence"
+        })
+    ]
 };
